@@ -117,13 +117,14 @@ Buff,Passive,Potions,... Other classes mentioned in gata.json can also be writte
 ### About gdata.json
 This mod may become more useful if you use ArkLib at the same time.
 
-If you don't know what `ImagePath` is, see LoadPNG. `"Here is ImagePath"` should be all replaced by  `ImagePath`.
+If you don't know what `ImagePath` is, see LoadPNG. `"Here is ImagePath"` should be all replaced by  `ImagePath`.Some of the Image has a default value in ChronoArk.
 
 Every .json means what you should add to gdata.json. Do not delete the useless part of the original gdata format.
 
+
 eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is ImagePath"`
 
-
+Is `"_gdeType_..."` actually used in ChronoArk? I am not sure. 
 #### Buff
 ```json
 {		
@@ -132,7 +133,7 @@ eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is Image
           "Moded": true,
           "_gdeType_Moded": "Bool",
 
-          "_gdeType__Icon_Moded_Path": "String",
+          "_gdeType_Icon_Moded_Path": "String",
           "_Icon_Moded_Path": "Here is ImagePath"
   
        	    ......
@@ -151,22 +152,22 @@ eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is Image
           //The default GameObject is the BattleObject of a hedgehog
           //If you want to change the battle image of some enemy with special GameObject,such as Godo, you should not use the default GameObject as a base GameObject.
           //Do not use Enemy GameObject with more than 1 image as a base GameObject.
-          "_gdeType__Base_BattleObject": "string",
+          "_gdeType_Base_BattleObject": "string",
           "_Base_BattleObject": "BattleEnemy/SR_Outlaw",
-          "_gdeType__Image_BattleObject_Path": "string",
+          "_gdeType_Image_BattleObject_Path": "string",
           "_Image_BattleObject_Path": "Here is ImagePath",
           "_CollectionSprite_Cover_Path": "Here is ImagePath",
-          "_gdeType__CollectionSprite_Cover_Path": "String"
+          "_gdeType_CollectionSprite_Cover_Path": "String"
   
        	    ......
 
                 }
 }	
 ```
-#### Enemy
+#### Skill
 ```json
 {		
-    "技能名": {
+    "SomeSkill": {
             .....
         "Moded": true,
         "_gdeType_Moded": "Bool",
@@ -187,6 +188,108 @@ eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is Image
   }
 }	
 ```
+#### Charactor
+```json
+{		
+    "SomeCharactor": {
+            .....
+        "Moded": true,
+        "_gdeType_Moded": "Bool",
+        "_face_Path": "Here is ImagePath",
+        "_gdeType_face_Path": "String",
+        "_PassiveIcon_Path": "Here is ImagePath",
+        "_gdeType_PassiveIcon_Path": "String",
+        "_CollectionSprite_Cover_Path": "Here is ImagePath",
+        "_gdeType_CollectionSprite_Cover_Path": "String",
+        "_gdeIsList_CampSD_Path": 1,
+        "_gdeType_CampSD_Path": "String",
+        "_CampSD_Path": [ 
+          "Here is ImagePath",
+          "Here is ImagePath",
+          "Here is ImagePath",
+          "Here is ImagePath"
+        ],
+        //BattleChar means the image you see when you choose your team at the begining of game or when you press Tab during the game.
+        //Here are 3 parameters to change the position and size of image
+        //Maybe in some place of the game, only `Max-Min` will be actually used
+        "_Image_BattleChar_Path": "Here is ImagePath",
+        "_gdeType_Image_BattleChar_Path": "String",
+        "_gdeType_Image_BattleChar_offsetMax": "Vector2",
+        "_Image_BattleChar_offsetMax": {
+          "x": 461,
+          "y": 84
+        },
+        "_gdeType_Image_BattleChar_offsetMin": "Vector2",
+        "_Image_BattleChar_offsetMin": {
+          "x": -520,
+          "y": -1394
+        },
+        "_gdeType_Image_BattleChar_pivot": "Vector2",
+        "_Image_BattleChar_pivot": {
+          "x": 0.4,
+          "y": 0.9
+        },
+        //FaceOriginChar means the image you see in the left of the Skill button, in the Collection ,at the bottom of your screen during the game and not in the battle ,in the little rectangle when you choose new team members.
+        "_Image_FaceOriginChar_Path": "Here is ImagePath",
+        "_gdeType_Image_FaceOriginChar_Path": "String",
+        "_gdeType_Image_FaceOriginChar_offsetMax": "Vector2",
+        "_Image_FaceOriginChar_offsetMax": {
+          "x": 375,
+          "y": 241
+        },
+        "_gdeType_Image_FaceOriginChar_offsetMin": "Vector2",
+        "_Image_FaceOriginChar_offsetMin": {
+          "x": -375,
+          "y": -1179
+        },
+        "_gdeType_Image_FaceOriginChar_pivot": "Vector2",
+        "_Image_FaceOriginChar_pivot": {
+          "x": 0.5,
+          "y": 0.85
+        },
+            ......
+        //Something irrelevant to ModtheArk
+        //In order to make sure the game won't be destroyed when your charactor is controlled by the 
+boss PharosLeader. Please ensure you have "Text_PharosLeader" like this(A 3 string list. The string can be either empty or not):
+        "Text_PharosLeader": [
+          "",
+          "",
+          ""
+        ]
+  }
+}	
+```
+#### Event
+```json
+{		
+    "SomeRandomEvent": {
+            .....
+       "_gdeType_moded": "Bool",
+        "Moded": "true",
+        "_MainImage_Moded_Path": "Here is ImagePath",
+        "_gdeType_MainImage_Moded_Path": "String",
+        "_MainImage_2Stage_Moded_Path": "Here is ImagePath",
+        "_gdeType_MainImage_2Stage_Moded_Path": "String",
+        "_MainImage_3Stage_Moded_Path": "Here is ImagePath",
+        "_gdeType_MainImage_3Stage_Moded_Path": "String"
+            ......
 
+  }
+}	
+```
+#### Item
+```json
+{		
+    "SomeItem": {
+            .....
+        "Moded": true,
+        "_gdeType_Moded": "Bool",
+        //Item_Active,Item_Consume,Item_Equip,Item _Misc,Item_Passive,Item_Potions(No Scrolls)
+        "_image_Moded_Path": "Here is ImagePath",
+        "_gdeType_image_Moded_Path": "String"
+            ......
 
+  }
+}	
+```
 
