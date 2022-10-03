@@ -50,25 +50,23 @@ eg: the Key of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\myassetbundle.asset`
 ### LoadPNG
 You can put .png files under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders.
 
-If you only want to load .png file through gdata.json, you can skip this section.
+the `ImagePath` in the following texts means 
+1.the path of .png files after `Chrono Ark\x64\Master\BepInEx\plugins`
 
-The following is for Modders who want to LoadPNG manually in their mods.
+eg: If you want to load `Chrono Ark\x64\Master\BepInEx\plugins\mydir\mypicture.png`, you have `ImagePath = "mydir\\mypicture.png"`
 
-All functions below have a namespace   `LoadPNG` and a classname `LoadPNG`.
+2. a string in the format of  `"GameResource+A+B+C"` to read the ChronoArk picture in `GDEDataManager.GDEResourcesData.Schemas["A"]["B"]["C"]`
+
+You can directly load .png file through gdata.json (see About gdata.json). The following is for modders who want to LoadPNG manually in their mods.
+
+All functions below have a namespace `LoadPNG` and a classname `LoadPNG`.
 
 Everything you do to the returned pictures of these functions will change them forever.(until you restart the game)
 
-1.`public static Texture2D ModTexture2D(string key)`
+1.`public static Texture2D ModTexture2D(string ImagePath)`
 
-It will return the picture under `Chrono Ark\x64\Master\BepInEx\plugins`, `key` is the path of .png file after `Chrono Ark\x64\Master\BepInEx\plugins`.
+2.`public static Sprite ModSprite(string ImagePath)`
 
-eg: the key of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\mypicture.png` is `"mydir\\mypicture.png"`
-
-If you want to use the pictures inside ChronoArk ,you can use `"GameResource+A+B+C"` to get `GDEDataManager.GDEResourcesData.Schemas[A][B][C].MainTexture` 
-
-2.`public static Sprite ModSprite(string key)`
-
-It is similar to Texture2D
 ### LoadType
 1.You can put your .dll file under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders.
 
@@ -84,13 +82,13 @@ eg:
 ```json
 {		
     "SomeSkill": {
-        ......
-       "SkillExtended": [
-      "Moded+mydir\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
-      ],
-       	......
+            ......
+           "SkillExtended": [
+          "Moded+mydir\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
+          ],
+       	    ......
 
-                },
+                }
 }		
 ```
 This .json means a Skill called "SomeSkill" will have a SkillExtended of class `SHAPHON.S_MyChar_0` written in Chrono Ark\x64\Master\BepInEx\plugins\mydir\mydll&NewType.dll`
@@ -119,6 +117,76 @@ Buff,Passive,Potions,... Other classes mentioned in gata.json can also be writte
 ### About gdata.json
 This mod may become more useful if you use ArkLib at the same time.
 
+If you don't know what `ImagePath` is, see LoadPNG. `"Here is ImagePath"` should be all replaced by  `ImagePath`.
+
+Every .json means what you should add to gdata.json. Do not delete the useless part of the original gdata format.
+
+eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is ImagePath"`
+
+
+#### Buff
+```json
+{		
+    "SomeSkill": {
+            ......
+          "Moded": true,
+          "_gdeType_Moded": "Bool",
+
+          "_gdeType__Icon_Moded_Path": "String",
+          "_Icon_Moded_Path": "Here is ImagePath"
+  
+       	    ......
+
+                }
+}	
+```
+#### Enemy
+```json
+{		
+    "SomeEnemy": {
+            ......
+          "Moded": true,
+          "_gdeType_Moded": "Bool",
+          //This is a base GameObject for changing the Enemy battle image,it can be found in gdata of other enemies
+          //The default GameObject is the BattleObject of a hedgehog
+          //If you want to change the battle image of some enemy with special GameObject,such as Godo, you should not use the default GameObject as a base GameObject.
+          //Do not use Enemy GameObject with more than 1 image as a base GameObject.
+          "_gdeType__Base_BattleObject": "string",
+          "_Base_BattleObject": "BattleEnemy/SR_Outlaw",
+          "_gdeType__Image_BattleObject_Path": "string",
+          "_Image_BattleObject_Path": "Here is ImagePath",
+          "_CollectionSprite_Cover_Path": "Here is ImagePath",
+          "_gdeType__CollectionSprite_Cover_Path": "String"
+  
+       	    ......
+
+                }
+}	
+```
+#### Enemy
+```json
+{		
+    "技能名": {
+            .....
+        "Moded": true,
+        "_gdeType_Moded": "Bool",
+        //The .png must have the same size and shape with ChronoArk Skills.
+        //Please use AssetStudio to check it.
+        //Fixed Skill Image
+        "_Image_2_Moded_Path": "Here is ImagePath",
+        "_gdeType_Image_2_Moded_Path": "String",
+        //Skill Button Image
+        "_Image_1_Moded_Path": "Here is ImagePath",
+        "_gdeType_Image_1_Moded_Path": "String",
+        //Skill Image
+        "_Image_0_Moded_Path": "Here is ImagePath",
+        "_gdeType_Image_0_Moded_Path": "String"
+            ......
+
+
+  }
+}	
+```
 
 
 
