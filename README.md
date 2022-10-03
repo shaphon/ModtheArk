@@ -9,17 +9,17 @@ Put the ModtheArk.dll in  `Chrono Ark\x64\Master\BepInEx\plugins` folder.
 
 This is a tool to:
 
-1.Load Unity AssetBundle files
+1. Load Unity AssetBundle files
 
-2.Load .png pictures
+2. Load .png pictures
 
-3.Load .dll assemblies( and new Types)
+3. Load .dll assemblies( and new Types)
 
-4.Play AudioClips loaded from AssetBundles（at game volume）
+4. Play AudioClips loaded from AssetBundles（at game volume）
 
-5.Fix the bug about `List<string>` that if you don't have strings in .csv files，you will load nothing from gdata.json
+5. Fix the bug about `List<string>` that if you don't have strings in .csv files，you will load nothing from gdata.json
 
-5.Load Moded gdata.json including
+5. Load Moded gdata.json including
 
 ① Buff icons
 
