@@ -1,0 +1,17 @@
+1.要求使用AssetBundle导入工具导入AudioClip
+2.可以通过MasterAudio.PlaySound("音效名");来播放音效
+3.音效名的格式为:    AssetBundle在Plugins文件夹下的路径 + ":" + AudioClip在AssetBundle下的路径 
+4.在渐变调整系统Bus音量时，不能使用DarkTonic.MasterAudio.MasterAudio下的
+public static void FadeBusToVolume(string busName, float newVolume, float fadeTime, Action completionCallback = null, bool willStopAfterFade = false, bool willResetVolumeAfterFade = false)
+而应当使用SHAPHON.ModtheAudio下的
+public static void FadeBusToVolume(string busName, float newVolume, float fadeTime, bool willStopAfterFade = false, bool willResetVolumeAfterFade = false)
+原因为System.Action因为未知原因无法使用，渐变调整Group音量也有类似的问题，不过暂时没有在本导入工具中提供类似的替代品
+5.本导入工具可能与.NetFrameWork的版本有关，如使用者使用了较高版本，请自行确认能否使用本导入工具
+6.可以通过SHAPHON.ModtheAudio下的
+public static void ChangeLoop(string sType,bool loop)
+来改变音效的循环与否，string参数为音效名
+7.可以通过可以通过SHAPHON.ModtheAudio下的
+public static void ChangeGroupBus(string sType,string NewBusName)
+来改变音效所属的Bus
+8.游戏自带音效可以使用UnityExplorer查看
+查找步骤为：打开ObjectExplorer,选择SceneExplorer下"Scene:"右边的选择栏，选择DontDestroyOnLoad,在下面找到SoundManager

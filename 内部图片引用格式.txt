@@ -1,0 +1,14 @@
+在调用LoadPNG内部分函数，或者填写gdata的图片路径时，可以不填写路径而按照以下格式引用内部图片
+"GameResource+A+B+C"
+ABC可以按照以下规则寻找（能否正确找到取决于浑圆）
+先找到所需要引用的图片出现在gdata下哪个内容中
+比如我要引用Azar的被动图片，就去查找
+"Azar(这里写的填到B)": {
+......
+"PassiveIcon(这里写的填到C)": "CharImagePrefebs/PassiveIcon/Azar(这里写了什么不重要)",
+......
+"_gdeSchema": "Character(这里写的填到A)",
+......
+}
+引用格式就是
+"GameResource+Character+Azar+PassiveIcon"

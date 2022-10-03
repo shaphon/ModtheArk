@@ -1,0 +1,33 @@
+如果按照格式更改gdata则不需要引用dll，以下仅用于需要在Mod里额外调用图片的情形
+
+namespace LoadPNG
+class LoadPNG
+引用dll后有以下有四个可以调用的函数
+1.
+public static void LoadTextureDir(Dictionary<string, Texture2D> texDict, string dir_path,string inner_path = "")
+这个函数会读取dir_path下所有的png，并将其以Texture2D的形式写入texDict中，字典的key为文件名，
+如果inner_path不为""，则会读取dir_path+"\\"+inner_path下所有的png，字典key为inner_path+"\\"+文件名
+
+2.
+public static Texture2D LoadTexture(string path)
+这个函数会读取path下的png，并以Texture2D的形式返回
+
+3.
+public static Texture2D ModTexture2D(string key)
+这个函数会读取plugin文件夹下的png，并以Texture2D的形式返回，key的规则同1
+如果key不是路径而是"GameResource+A+B+C"则会读取
+GDEDataManager.GDEResourcesData.Schemas[A][B][C].MainTexture下的图片
+4.
+public static Sprite ModSprite(string key)
+这个函数会读取plugin文件夹下的png，并转换为Sprite，以Sprite的形式返回，key的规则同1
+如果key不是路径而是"GameResource+A+B+C"则会读取
+GDEDataManager.GDEResourcesData.Schemas[A][B][C].MainSprite下的图片
+
+
+5.
+ public static void  ChangeTexture2D(string key,Texture2D new_tex)
+这个函数会改变临时存储的Texture2D，可以在第一次调用这个图片时将其改动固定下来
+
+6.
+public static Dictionary<string, Texture2D> All_Moded_Texture2D()
+这个函数会返回所有临时存储的plugin文件夹下的png（2，3，4的所用的都是这个字典）

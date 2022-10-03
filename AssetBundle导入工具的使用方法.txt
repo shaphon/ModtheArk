@@ -1,0 +1,7 @@
+1.可以将Unity的AssetBundle放在plugins文件夹（及其子文件夹）下
+2.自建的AssetBundle的文件名，要求以".asset"结尾
+3.可以使用LoadAsset.LoadAsset.moded_asset来访问到读取好的Dictionary<string, AssetBundle>，key为plugins文件夹后的AssetBundle路径
+4.请使用2018.4.32f1版本的Unity进行AssetBundle打包
+在安装了UnityHub以后，Windows+R输入以下内容即可下载
+unityhub://2018.4.32f1/fba45da84107
+5.AssetBundle的打包方法可以参看B站视频：【唐老狮】Unity热更新之AssetBundle的P2，相关插件可以在https://github.com/Unity-Technologies/AssetBundles-Browser下载

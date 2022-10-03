@@ -1,0 +1,12 @@
+1.可以将自建class放在plugins文件夹（及其子文件夹）下，在游戏调用Type.GetType(...)函数时进行读取
+2.自建的class的文件名，要求以"&NewType.dll"结尾
+3.游戏内调用Type.GetType(string name)时，如果name的格式为   Moded+路径名+类名   则会自动读取到该路径下的类
+     例子：
+     Type.GetType("Moded+mydir\\S_Camera_0&NewType.dll+Camera.S_Camera_0")
+     会读取到.....plugins\mydir\S_Camera_0&NewType.dll里所定义的 ，namespace为Camera的 ，名为S_Camera_0的类
+4.可以直接在gdata里修改，以引导游戏原程序读取到这个类，
+     比如某个技能下的 "SkillExtended": [
+      "Moded+mydir\\S_Camera_0&NewType.dll+Camera.S_Camera_0"
+    ],
+     意味着这个角色的技能效果会按照自己定义的Camera.S_Camera_0类实现
+     被动，Buff等同理
