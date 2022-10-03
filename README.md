@@ -19,7 +19,7 @@ This is a tool to:
 
 5. Fix the bug about `List<string>` that if you don't have strings in .csv files，you will load nothing from gdata.json
 
-5. Load Moded gdata.json including
+6. Load Moded gdata.json including
 
 ① Buff icons
 
@@ -36,16 +36,16 @@ This is a tool to:
 ⑦ Event Images
 
 ### LoadAsset
-1.You can put Unity AssetBundle under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders
+1. You can put Unity AssetBundle under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders
 
-2.There must be `.asset`   at the end of your AssetBundle filename.
+2. There must be `.asset`   at the end of your AssetBundle filename.
 
-3.You can use LoadAsset.LoadAsset.moded_asset to get the Dictionary<string, AssetBundle>. ModtheArk Will read AssetBundle into this Dictionary when game starts.
+3. You can use LoadAsset.LoadAsset.moded_asset to get the Dictionary<string, AssetBundle>. ModtheArk Will read AssetBundle into this Dictionary when game starts.
 The Keys are paths of `.asset` after `Chrono Ark\x64\Master\BepInEx\plugins`
 
 eg: the Key of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\myassetbundle.asset` is `"mydir\\myassetbundle.asset"`
 
-4.Please Use Unity of version `2018.4.32f1` to make AssetBundles. You Can download it from https://unity3d.com/get-unity/download/archive
+4. Please Use Unity of version `2018.4.32f1` to make AssetBundles. You Can download it from https://unity3d.com/get-unity/download/archive
 
 ### LoadPNG
 If you want to Load .png file through gdata.json, you can skip this section.
