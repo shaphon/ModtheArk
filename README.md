@@ -59,6 +59,13 @@ eg: the `filepath` of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\Yourmodname-M
 
 `"Yourmodname-ModtheArk\\mydir2\\myassetbundle.asset"`
 
+4. When the mod needs to be released, it should be that:
+    - Yourmodname-ModtheArk
+    - arklib_config.json 
+    - icon.png
+    - manifest.json
+    - README.md
+
 
 ### LoadAsset
 1.You can put Unity AssetBundle under `Yourmodname-ModtheArk` folder
@@ -74,9 +81,10 @@ The Keys are `filepath` of `.asset`(See :Before you start modding)
 You can put .png files under `Yourmodname-ModtheArk` folder
 
 the `ImagePath` in the following texts means 
+
 1.the `filepath` of .png files (See :Before you start modding)
 
-2. a string in the format of  `"GameResource+A+B+C"` to read the ChronoArk picture in `GDEDataManager.GDEResourcesData.Schemas["A"]["B"]["C"]`
+2.a string in the format of  `"GameResource+A+B+C"` to read the ChronoArk picture in `GDEDataManager.GDEResourcesData.Schemas["A"]["B"]["C"]`
 
 You can directly load .png file through gdata.json (see About gdata.json). The following is for modders who want to LoadPNG manually in their mods.
 
