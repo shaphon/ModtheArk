@@ -113,7 +113,7 @@ eg:
     "SomeSkill": {
             ......
            "SkillExtended": [
-          "Moded+Yourmodname-ModtheArk\\mydir2\\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
+          "Moded+Yourmodname-ModtheArk\\mydir2\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
           ],
        	    ......
 
