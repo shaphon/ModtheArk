@@ -33,17 +33,30 @@ namespace LoadAsset
         private static readonly Harmony harmony = new Harmony(GUID);
 
         public static Dictionary<string, AssetBundle> moded_asset = new Dictionary<string, AssetBundle>();
+        private static Dictionary<string, DirectoryInfo> DIR;
         void Awake()
         {
-           
-            LoadAssetDir(moded_asset, Paths.PluginPath, "");
+            try
+            {
+                ArklibAPI.ModtheFolder API = new ArklibAPI.ModtheFolder();
+                DIR = API.GetModRoots("ModtheArk");
+            }
+            catch
+            {
+                UnityEngine.Debug.Log("ModtheArk:Error");
+            }
+            foreach (string modname in DIR.Keys)
+            {
+                string path = DIR[modname].FullName;
+                LoadAssetDir(moded_asset, path+"\\..", modname + "-ModtheArk");
+            }
             
             harmony.PatchAll();
         }
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
         public static void LoadAssetDir(Dictionary<string, AssetBundle> assetDict, string dir_path, string inner_path = "")
         {

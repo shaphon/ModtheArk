@@ -38,7 +38,7 @@ namespace SHAPHON
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
 
 

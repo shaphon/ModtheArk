@@ -40,7 +40,7 @@ namespace SHAPHON
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
         public static Dictionary<string, Texture2D> texDict;
         void Start()
@@ -57,6 +57,7 @@ namespace SHAPHON
         {
 
         }
+        static Vector2 orisize = new Vector2(0, 0);
         [HarmonyPatch(typeof(StartPartySelect))]
         private class StartPartySelectPlugin
         {
@@ -64,17 +65,21 @@ namespace SHAPHON
             [HarmonyPostfix]
             private static void Init_Postfix(StartPartySelect __instance, int select)
             {
+                if(orisize.x==0 && orisize.y == 0)
+                {
+                    orisize = __instance.gameObject.transform.Find("CharAlign").GetComponent<RectTransform>().sizeDelta;
+                }
                 if (__instance.Chars.Count > 20)
                 {
                     if (select == 2)
                     {
-                        __instance.gameObject.transform.Find("CharAlign").localScale = new Vector3((float)0.5, (float)0.5, (float)0);
-                        __instance.gameObject.transform.Find("CharAlign").GetComponent<RectTransform>().sizeDelta = new Vector2(3900, 800);
+                        __instance.gameObject.transform.Find("CharAlign").localScale = new Vector3((float)0.66, (float)0.66, (float)0);
+                        __instance.gameObject.transform.Find("CharAlign").GetComponent<RectTransform>().sizeDelta = orisize/0.66f;
                     }
                     else if (select == 1)
                     {
                         __instance.gameObject.transform.Find("CharAlign").localScale = new Vector3((float)1, (float)1, (float)0);
-                        __instance.gameObject.transform.Find("CharAlign").GetComponent<RectTransform>().sizeDelta = new Vector2(1950, 350);
+                        __instance.gameObject.transform.Find("CharAlign").GetComponent<RectTransform>().sizeDelta = orisize;
                     }
                 }
 

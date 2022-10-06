@@ -2,6 +2,8 @@
 using GameDataEditor;
 using HarmonyLib;
 using I2.Loc;
+using Steamworks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +20,6 @@ namespace SHAPHON
         private static readonly Harmony harmony = new Harmony(GUID);
         public static int count = -1;
         private static Dictionary<string, GameObject> moded_BattleObject = new Dictionary<string, GameObject>();
-        private static Dictionary<string, GameObject> moded_BattleChar = new Dictionary<string, GameObject>();
         void Awake()
         {
 
@@ -29,7 +30,7 @@ namespace SHAPHON
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
         public static Dictionary<string, Texture2D> texDict;
         void Start()
@@ -90,30 +91,75 @@ namespace SHAPHON
                     }
                     else
                     {
-
-
-                        string _Base_BattleObject;
-                        dict.TryGetString("_Base_BattleObject", out _Base_BattleObject, key);
-                        if (string.IsNullOrEmpty(_Base_BattleObject))
+                        if (moded_BattleObject.ContainsKey(key))
                         {
-                            _Base_BattleObject = "BattleEnemy/Dochi";
+                            try
+                            {
+                                __result = moded_BattleObject[key];
+                                if (__result == null)
+                                {
+                                    throw new Exception("重新读取");
+                                }
+                            }
+                            catch
+                            {
+                                string _Base_BattleObject;
+                                dict.TryGetString("_Base_BattleObject", out _Base_BattleObject, key);
+                                if (string.IsNullOrEmpty(_Base_BattleObject))
+                                {
+                                    _Base_BattleObject = "BattleEnemy/Dochi";
+                                }
+                                UnityEngine.Debug.Log(_Base_BattleObject);
+                                GameObject battleob_ori = Resources.Load<GameObject>(_Base_BattleObject);
+                                string _Image_BattleObject_Path;
+                                dict.TryGetString("_Image_BattleObject_Path", out _Image_BattleObject_Path, key);
+                                if (string.IsNullOrEmpty(_Image_BattleObject_Path))
+                                {
+                                    _Image_BattleObject_Path = "Camera_OriFace2.png";
+                                }
+                                GameObject battleob = UnityEngine.Object.Instantiate(battleob_ori);
+                                UnityEngine.Debug.Log(_Image_BattleObject_Path);
+                                SpriteRenderer battleob_img = battleob.GetComponentInChildren<SpriteRenderer>();
+                                battleob_img.sprite = Load_EnemyBattle_Image(_Image_BattleObject_Path);
+                                battleob.name = _Image_BattleObject_Path;
+                                moded_BattleObject[key]= battleob;
+                                __result = battleob;
+                            }
                         }
-                        UnityEngine.Debug.Log(_Base_BattleObject);
-                        GameObject battleob_ori = Resources.Load<GameObject>(_Base_BattleObject);
-                        string _Image_BattleObject_Path;
-                        dict.TryGetString("_Image_BattleObject_Path", out _Image_BattleObject_Path, key);
-                        if (string.IsNullOrEmpty(_Image_BattleObject_Path))
+                        else
                         {
-                            _Image_BattleObject_Path = "Camera_OriFace2.png";
+                            string _Base_BattleObject;
+                            dict.TryGetString("_Base_BattleObject", out _Base_BattleObject, key);
+                            if (string.IsNullOrEmpty(_Base_BattleObject))
+                            {
+                                _Base_BattleObject = "BattleEnemy/Dochi";
+                            }
+                            UnityEngine.Debug.Log(_Base_BattleObject);
+                            GameObject battleob_ori = Resources.Load<GameObject>(_Base_BattleObject);
+                            string _Image_BattleObject_Path;
+                            dict.TryGetString("_Image_BattleObject_Path", out _Image_BattleObject_Path, key);
+                            if (string.IsNullOrEmpty(_Image_BattleObject_Path))
+                            {
+                                _Image_BattleObject_Path = "Camera_OriFace2.png";
+                            }
+                            GameObject battleob = UnityEngine.Object.Instantiate(battleob_ori);
+                            UnityEngine.Debug.Log(_Image_BattleObject_Path);
+                            SpriteRenderer battleob_img = battleob.GetComponentInChildren<SpriteRenderer>();
+                            battleob_img.sprite = Load_EnemyBattle_Image(_Image_BattleObject_Path);
+                            battleob.name = _Image_BattleObject_Path;
+                            try
+                            {
+                                moded_BattleObject.Add(key, battleob);
+                            }
+                            catch
+                            {
+
+                            }
+                            
+
+                            __result = battleob;
                         }
-                        GameObject battleob = Object.Instantiate(battleob_ori);
-                        UnityEngine.Debug.Log(_Image_BattleObject_Path);
-                        SpriteRenderer battleob_img = battleob.GetComponentInChildren<SpriteRenderer>();
-                        battleob_img.sprite = Load_EnemyBattle_Image(_Image_BattleObject_Path);
-                        battleob.name = _Image_BattleObject_Path;
-
-
-                        __result = battleob;
+                        
 
 
                     }

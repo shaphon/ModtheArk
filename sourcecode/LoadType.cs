@@ -37,10 +37,23 @@ namespace LoadType
 
         private static Dictionary<string, Assembly> moded_assembly_dict = new Dictionary<string, Assembly>();
         private static Dictionary<string, Dictionary<string, Type>> moded_type_dict = new Dictionary<string, Dictionary<string, Type>>();
-        
+        private static Dictionary<string, DirectoryInfo> DIR;
         void Awake()
         {
-            LoadAssemblyDir(moded_assembly_dict, Paths.PluginPath, "");
+            try
+            {
+                ArklibAPI.ModtheFolder API = new ArklibAPI.ModtheFolder();
+                DIR = API.GetModRoots("ModtheArk");
+            }
+            catch
+            {
+                UnityEngine.Debug.Log("ModtheArk:Error");
+            }
+            foreach (string modname in DIR.Keys)
+            {
+                string path = DIR[modname].FullName;
+                LoadAssemblyDir(moded_assembly_dict, path + "\\..", modname + "-ModtheArk");
+            }
             LoadNewTypes(moded_type_dict, moded_assembly_dict);
             
             harmony.PatchAll();
@@ -48,7 +61,7 @@ namespace LoadType
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
         public static void LoadNewTypes(Dictionary<string, Dictionary<string, Type>> moded_type_dict, Dictionary<string, Assembly> moded_assembly_dict)
         {
@@ -114,7 +127,21 @@ namespace LoadType
                 UnityEngine.Debug.Log("类文件读取完毕:" + filename);
             }
         }
+        /*
+        public static void GetAllTypes()
+        {
 
+            foreach (Dictionary<string,Type> asdict in moded_type_dict.Values)
+            {
+                foreach(Type type in asdict.Values)
+                {
+                    moded_all_types.Add(type);
+                }
+            }
+            UnityEngine.Debug.Log("GETALLTYPESDONE"+moded_all_types.Count);
+
+        } 
+        */
         [HarmonyPatch(typeof(Type))]
         private class TypePlugin
         {
@@ -143,7 +170,41 @@ namespace LoadType
 
         
 
+        [HarmonyPatch(typeof(Assembly))]
+        private class AssemblyPlugin
+        {
+            [HarmonyPatch("GetTypes",new Type[] {})]
+            [HarmonyPostfix]
+            private static void GetTypespostfix(Assembly __instance, ref Type[] __result)
+            {
+                /*
+                string target = "Assembly-CSharp";
+                UnityEngine.Debug.Log(__instance.GetName().ToString().Substring(0, target.Length));
+                if (__instance.GetName().ToString().Substring(0, target.Length) == target)
+                {
+                    UnityEngine.Debug.Log(__instance.GetName().ToString().Substring(0, target.Length)+"!!!!!");
+                    UnityEngine.Debug.Log(Assembly.GetExecutingAssembly().GetName()); 
+                    __result = __result;
+                }
+                    
+                    if (__instance.GetName().ToString().Substring(0, target.Length) == target)
+                    {
+                        UnityEngine.Debug.Log(__instance.GetName().ToString().Substring(0, target.Length));
+                        //List<Type> temp =  Traverse.Create(__instance).Method("GetTypes").GetValue<Type[]>(false).ToList();
+                        //temp.AddRange(moded_all_types);
+                        //__result = temp.ToArray();
+                        //__result = Traverse.Create(__instance).Method("GetTypes").GetValue<Type[]>(false);
+                        UnityEngine.Debug.Log(moded_all_types.Count());
 
+                    }
+                    else
+                    {
+
+                    }*/
+
+
+            }
+        }
         public void readSave(string filePath,  string targetpath)
         {
             DESCryptoServiceProvider Secretkey = new DESCryptoServiceProvider();

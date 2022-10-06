@@ -36,9 +36,9 @@ namespace SHAPHON
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
-
+        private static Dictionary<string, GameObject> moded_AllyBuffEffect = new Dictionary<string, GameObject>();
 
 
 
@@ -65,7 +65,63 @@ namespace SHAPHON
                     Texture2D _Icon = LoadPNG.LoadPNG.ModTexture2D(_Icon_Moded_Path);
                     Traverse.Create(__instance).Field("_Icon").SetValue(_Icon);
                 }
+            }
+            [HarmonyPatch(nameof(GDEBuffData.AllyBuffEffect), MethodType.Getter)]
+            [HarmonyPostfix]
+            private static void AllyBuffEffect_Postfix(GDEBuffData __instance,GameObject __result)
+            {
+                string key = Traverse.Create(__instance).Field("_key").GetValue<string>();
+                Dictionary<string, object> dict;
+                if (GDEDataManager.Get(key, out dict))
+                {
+                    dict.TryGetBool("Moded", out bool moded, key);
+                    if (moded)
+                    {
+                        if(__result != null)
+                        {
+                            if (moded_AllyBuffEffect.Keys.Contains(key))
+                            {
+                                try
+                                {
+                                    
+                                    if (moded_AllyBuffEffect[key] == null)
+                                    {
+                                        throw new Exception("重新读取");
+                                    }
+                                    else
+                                    {
+                                        __result = moded_AllyBuffEffect[key];
+                                    }
+                                }
+                                catch
+                                {
+                                    __result = GameObject.Instantiate(__result);
+                                    __result.SetActive(false);
+                                    moded_AllyBuffEffect[key] = __result;
+                                }
+                               
+                            }
+                            else
+                            {
+                                __result = GameObject.Instantiate(__result);
+                                __result.SetActive(false);
+                                try
+                                {
+                                    moded_AllyBuffEffect.Add(key, __result);
+                                }
+                                catch
+                                {
+
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                   
                 }
+                
+            }
 
         }
 

@@ -34,15 +34,30 @@ namespace LoadPNG
 
         private static Dictionary<string, Texture2D> moded_texture = new Dictionary<string, Texture2D>();
         private static Dictionary<string, Sprite> moded_sprite = new Dictionary<string, Sprite>();
+
+        private static Dictionary<string, DirectoryInfo> DIR;
         void Awake()
         {
-            LoadTextureDir(moded_texture, Paths.PluginPath, "");
+            try
+            {
+                ArklibAPI.ModtheFolder API = new ArklibAPI.ModtheFolder();
+                DIR = API.GetModRoots("ModtheArk");
+            }
+            catch
+            {
+                UnityEngine.Debug.Log("ModtheArk:Error");
+            }
+            foreach(string modname in DIR.Keys)
+            {
+                string path = DIR[modname].FullName;
+                LoadTextureDir(moded_texture,path + "\\..", modname + "-ModtheArk");
+            }
             harmony.PatchAll();
         }
         void OnDestroy()
         {
             if (harmony != null)
-                harmony.UnpatchAll(GUID);
+                harmony.UnpatchSelf();
         }
         public static void LoadTextureDir(Dictionary<string, Texture2D> texDict, string dir_path,string inner_path = "")
         {
