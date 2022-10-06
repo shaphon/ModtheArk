@@ -34,6 +34,31 @@ This is a tool to:
 ⑥ Item icons （except for Scrolls）
 
 ⑦ Event Images
+### Before you start modding
+1.Create a folder with  `arklib_config.json`
+```json
+{
+  "Modname": "Yourmodname",
+  "UseModtheArk": true
+}    
+```
+Put ModtheArk.dll and ArklibAPI.dll in plugins folder Then start the game once.
+
+2.You can find your folder contains:
+
+- Yourmodname-ModtheArk
+- arklib_config.json
+
+You can put your .asset, .png or .dll files(see LoadAsset,LoadPNG,LoadType)  in `Yourmodname-ModtheArk` folder, and ModtheArk will read them all.
+
+3. When you start to make your mod, you may need to LoadAsset,LoadPNG,LoadType through a `path`
+
+The `path` is the path of your file that begins with `Yourmodname-ModtheArk\...`
+
+eg: the `path` of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\Yourmodname-ModtheArk\mydir2\myassetbundle.asset` is
+
+`"Yourmodname-ModtheArk\\mydir2\\myassetbundle.asset"`
+
 
 ### LoadAsset
 1.You can put Unity AssetBundle under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders
