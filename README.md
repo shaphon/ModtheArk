@@ -51,34 +51,30 @@ Put ModtheArk.dll and ArklibAPI.dll in plugins folder Then start the game once.
 
 You can put your .asset, .png or .dll files(see LoadAsset,LoadPNG,LoadType)  in `Yourmodname-ModtheArk` folder, and ModtheArk will read them all.
 
-3. When you start to make your mod, you may need to LoadAsset,LoadPNG,LoadType through a `path`
+3. When you start to make your mod, you may need to LoadAsset,LoadPNG,LoadType through a `filepath`
 
-The `path` is the path of your file that begins with `Yourmodname-ModtheArk\...`
+The `filepath` is the path of your file that begins with `Yourmodname-ModtheArk\...`
 
-eg: the `path` of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\Yourmodname-ModtheArk\mydir2\myassetbundle.asset` is
+eg: the `filepath` of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\Yourmodname-ModtheArk\mydir2\myassetbundle.asset` is
 
 `"Yourmodname-ModtheArk\\mydir2\\myassetbundle.asset"`
 
 
 ### LoadAsset
-1.You can put Unity AssetBundle under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders
+1.You can put Unity AssetBundle under `Yourmodname-ModtheArk` folder
 
 2.There must be `.asset`   at the end of your AssetBundle filename.
 
 3.You can use LoadAsset.LoadAsset.moded_asset to get the Dictionary<string, AssetBundle>. ModtheArk Will read AssetBundle into this Dictionary when game starts.
-The Keys are paths of `.asset` after `Chrono Ark\x64\Master\BepInEx\plugins`
-
-eg: the Key of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\myassetbundle.asset` is `"mydir\\myassetbundle.asset"`
+The Keys are `filepath` of `.asset`(See :Before you start modding)
 
 4.Please Use Unity of version `2018.4.32f1` to make AssetBundles. You Can download it from https://unity3d.com/get-unity/download/archive
 
 ### LoadPNG
-You can put .png files under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders.
+You can put .png files under `Yourmodname-ModtheArk` folder
 
 the `ImagePath` in the following texts means 
-1.the path of .png files after `Chrono Ark\x64\Master\BepInEx\plugins`
-
-eg: If you want to load `Chrono Ark\x64\Master\BepInEx\plugins\mydir\mypicture.png`, you have `ImagePath = "mydir\\mypicture.png"`
+1.the `filepath` of .png files (See :Before you start modding)
 
 2. a string in the format of  `"GameResource+A+B+C"` to read the ChronoArk picture in `GDEDataManager.GDEResourcesData.Schemas["A"]["B"]["C"]`
 
@@ -93,13 +89,13 @@ Everything you do to the returned pictures of these functions will change them f
 2.`public static Sprite ModSprite(string ImagePath)`
 
 ### LoadType
-1.You can put your .dll file under `Chrono Ark\x64\Master\BepInEx\plugins` folder and its subfolders.
+1.You can put your .dll file under `Yourmodname-ModtheArk` folder
 
 2.There must be `&NewType.dll`   at the end of your assembly filename.
 
-3.You can use `Type.GetType(string name)` with name in the format of  `"Moded+PathName+namespace.ClassName"`to get your class in .dll files
+3.You can use `Type.GetType(string name)` with name in the format of  `"Moded+filepath+namespace.ClassName"`to get your class in .dll files
 
-eg:`Type.GetType("Moded+mydir\\mydll&NewType.dll+SHAPHON.S_MyChar_0")`will return the type defined in `Chrono Ark\x64\Master\BepInEx\plugins\mydir\mydll&NewType.dll` with namespace  `SHAPHON` and a classname `S_MyChar_0`
+eg:`Type.GetType("Moded+Yourmodname-ModtheArk\\mydir2\\\mydll&NewType.dll+SHAPHON.S_MyChar_0")`will return the type defined in `Chrono Ark\x64\Master\BepInEx\plugins\NoMatterWhatItNames\Yourmodname-ModtheArk\mydir2\mydll&NewType.dll` with namespace  `SHAPHON` and a classname `S_MyChar_0`
 
 4.You can write strings in the format above in gdata.json,to induce ChronoArk to read your class
 
@@ -109,14 +105,14 @@ eg:
     "SomeSkill": {
             ......
            "SkillExtended": [
-          "Moded+mydir\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
+          "Moded+Yourmodname-ModtheArk\\mydir2\\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
           ],
        	    ......
 
                 }
 }		
 ```
-This .json means a Skill called "SomeSkill" will have a SkillExtended of class `SHAPHON.S_MyChar_0` written in Chrono Ark\x64\Master\BepInEx\plugins\mydir\mydll&NewType.dll`
+This .json means a Skill called "SomeSkill" will have a SkillExtended of class `SHAPHON.S_MyChar_0` written in `Chrono Ark\x64\Master\BepInEx\plugins\NoMatterWhatItNames\Yourmodname-ModtheArk\mydir2\mydll&NewType.dll`
 
 Buff,Passive,Potions,... Other classes mentioned in gata.json can also be written in this way.
 
