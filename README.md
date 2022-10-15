@@ -5,6 +5,8 @@ A tool for Chronoark mods
 
 Put the ModtheArk.dll in  `Chrono Ark\x64\Master\BepInEx\plugins` folder.
 
+How to check a simple Mod Character Skill Encyclopedia: press Tab in the Field and click the name of the character after expanding his/her full image
+
 ## For Modder
 
 This is a tool to:
@@ -19,7 +21,9 @@ This is a tool to:
 
 5.Fix the bug about `List<string>` that if you don't have strings in .csv files，you will load nothing from gdata.json
 
-6.Load Moded gdata.json including
+6.Check a simple Mod Character Skill Encyclopedia(press Tab in the Field and click the name of the character after expanding his/her full image)
+
+7.Load Moded gdata.json including
 
 ① Buff icons
 
@@ -34,6 +38,8 @@ This is a tool to:
 ⑥ Item icons （except for Scrolls）
 
 ⑦ Event Images
+
+⑧ SkillExtended Icon
 ### Before you start modding
 1.Create a folder with  `arklib_config.json`
 ```json
@@ -316,6 +322,20 @@ boss PharosLeader. Please ensure you have "Text_PharosLeader" like this(A 3 stri
         //Item_Active,Item_Consume,Item_Equip,Item _Misc,Item_Passive,Item_Potions(No Scrolls)
         "_image_Moded_Path": "Here is ImagePath",
         "_gdeType_image_Moded_Path": "String"
+            ......
+
+  }
+}	
+```
+#### SkillExtended
+```json
+{		
+    "SomeSkillExtended": {
+            .....
+        "Moded": true,
+        "_gdeType_Moded": "Bool",
+        "_gdeType_IsIcon_Moded_Path": "String",
+        "_IsIcon_Moded_Path": "Here is ImagePath",
             ......
 
   }
