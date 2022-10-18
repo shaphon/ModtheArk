@@ -103,7 +103,7 @@ Everything you do to the returned pictures of these functions will change them f
 2.`public static Sprite ModSprite(string ImagePath)`
 
 ### LoadType
-1.You can put your .dll file under `Yourmodname-ModtheArk` folder, the Assembly name (not .dll filename)should not contains `&`.
+1.You can put your .dll file under `Yourmodname-ModtheArk` folder, the Assembly name (not .dll filename) should not contain characters except for alphanumeric characters and the underscore _.
 
 2.There must be `NewType.dll`   at the end of your assembly filename.  `&`in your filename will be ignored.
 
