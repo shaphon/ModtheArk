@@ -103,15 +103,11 @@ Everything you do to the returned pictures of these functions will change them f
 2.`public static Sprite ModSprite(string ImagePath)`
 
 ### LoadType
-1.You can put your .dll file under `Yourmodname-ModtheArk` folder
+1.You can put your .dll file under `Yourmodname-ModtheArk` folder, the Assembly name (not .dll filename)should not contains `&`.
 
-2.There must be `&NewType.dll`   at the end of your assembly filename.
+2.There must be `NewType.dll`   at the end of your assembly filename.  `&`in your filename will be ignored.
 
-3.You can use `Type.GetType(string name)` with name in the format of  `"Moded+filepath+namespace.ClassName"`to get your class in .dll files
-
-eg:`Type.GetType("Moded+Yourmodname-ModtheArk\\mydir2\\\mydll&NewType.dll+SHAPHON.S_MyChar_0")`will return the type defined in `Chrono Ark\x64\Master\BepInEx\plugins\NoMatterWhatItNames\Yourmodname-ModtheArk\mydir2\mydll&NewType.dll` with namespace  `SHAPHON` and a classname `S_MyChar_0`
-
-4.You can write strings in the format above in gdata.json,to induce ChronoArk to read your class
+3.You can write strings in the format above in gdata.json,to induce ChronoArk to read your class
 
 eg:
 ```json
@@ -119,6 +115,7 @@ eg:
     "SomeSkill": {
             ......
            "SkillExtended": [
+           \\& in filename will be ignored
           "Moded+Yourmodname-ModtheArk\\mydir2\\mydll&NewType.dll+SHAPHON.S_MyChar_0"
           ],
        	    ......
@@ -126,7 +123,7 @@ eg:
                 }
 }		
 ```
-This .json means a Skill called "SomeSkill" will have a SkillExtended of class `SHAPHON.S_MyChar_0` written in `Chrono Ark\x64\Master\BepInEx\plugins\NoMatterWhatItNames\Yourmodname-ModtheArk\mydir2\mydll&NewType.dll`
+This .json means a Skill called "SomeSkill" will have a SkillExtended of class `SHAPHON.S_MyChar_0` written in `Chrono Ark\x64\Master\BepInEx\plugins\NoMatterWhatItNames\Yourmodname-ModtheArk\mydir2\mydllNewType.dll`
 
 Buff,Passive,Potions,... Other classes mentioned in gata.json can also be written in this way.
 
