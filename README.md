@@ -80,12 +80,14 @@ eg: the `filepath` of `Chrono Ark\x64\Master\BepInEx\plugins\mydir\Yourmodname-M
 
 3.You can use LoadAsset.LoadAsset.moded_asset to get the Dictionary<string, AssetBundle>. ModtheArk Will read AssetBundle into this Dictionary when game starts.
 The Keys are `filepath` of `.asset`(See :Before you start modding)
-4. you can use the `AssetObjectKey`  
+4.You can use the Method ` static public T LoadFromAsset<T>(string key) where T : UnityEngine.Object` in ` LoadAsset.LoadAsset` class to get your Object.
+the key is `AssetObjectKey` , which is in a format of `AssetBundle+filepath:ObjectPath`
 
 4.Please Use Unity of version `2018.4.32f1` to make AssetBundles. You Can download it from https://unity3d.com/get-unity/download/archive
 
 5.if the `filepath` of your .asset file is  `Yourmodname-ModtheArk\\yourmodname-modtheark.asset`, it will be read as the Default AssetBundle. 
-If one Object in your  Default AssetBundle have a path of the format "Assets\\Yourmodname-ModtheArk\\somepath" , you can call 
+
+If one Object in your  Default AssetBundle have a path of the format "Assets\\Yourmodname-ModtheArk\\somepath" , it's `AssetObjectKey` will have a simple form of `Yourmodname-ModtheArk\\somepath`.
 
 ### LoadPNG
 You can put .png files under `Yourmodname-ModtheArk` folder
@@ -95,6 +97,8 @@ the `ImagePath` in the following texts means
 1.the `filepath` of .png files (See :Before you start modding)
 
 2.a string in the format of  `"GameResource+A+B+C"` to read the ChronoArk picture in `GDEDataManager.GDEResourcesData.Schemas["A"]["B"]["C"]`
+
+3.`AssetObjectKey`
 
 You can directly load .png file through gdata.json (see About gdata.json). The following is for modders who want to LoadPNG manually in their mods.
 
@@ -163,9 +167,7 @@ eg: `"Icon":""` is nessary although you have `"_Icon_Moded_Path": "Here is Image
 Is `"_gdeType_..."` actually used in ChronoArk? I am not sure. 
 
 #### GameObject
-when `"_gdeType_xxxxxx": "GameObject"` appears in the original gdata.json, the game will call the Method `Resources.Load<GameObject>(...) ` to get the GameObject from game resources. Now, the game can get GameObjects from your AssetBundle.
-
-
+when `"_gdeType_xxxxxx": "GameObject"` appears in the original gdata.json, the game will call the Method `Resources.Load<GameObject>(...) ` to get the GameObject from game resources. Now, the game can get GameObjects from your AssetBundle if you write `AssetObjectKey` in the same place.
 
 #### Buff
 ```json
@@ -347,5 +349,65 @@ boss PharosLeader. Please ensure you have "Text_PharosLeader" like this(A 3 stri
 
   }
 }	
+```
+#### SpecialRule
+```json
+{		
+    "The AssemblyQualifiedName of your Type": {
+            .....
+        "Moded": true,
+        "_Icon_Moded_Path": "Here is ImagePath",
+            ......
+
+  }
+}	
+```
+#### CurseList(EquipCurse)
+```json
+{		
+    "your CurseList": {
+            .....
+        "Moded": true,
+        "ModedClassName": "Moded+dllfilepath+namespace.classname",
+            ......
+
+  }
+}	
+```
+#### CurseList(EquipCurse)
+```json
+{		
+    "your CurseList": {
+            .....
+        "Moded": true,
+        "ModedClassName": "Moded+dllfilepath+namespace.classname",
+            ......
+
+  }
+}	
+```
+#### Change String List in gdata.json(Example)
+```json
+{
+  "Image_Scrolls_Add_test2": {
+    "TargetMainKey": "Image_Scrolls",
+    "TargetKey": "Sprites",
+    "MyList": [ "123123111", "456456111", "789789111" ],
+    "AutoAdd": false,
+    "_gdeSchema": "ModGdataListHelper"
+  },
+  "Image_Scrolls_Remove_test2": {
+    "TargetMainKey": "Image_Scrolls",
+    "TargetKey": "Sprites",
+    "MyList": [
+      "Image/Scrolls/item_scroll_03",
+      "Image/Scrolls/item_scroll_06",
+      "Image/Scrolls/item_scroll_09"
+    ],
+    "AutoRemove": false,
+    "_gdeSchema": "ModGdataListHelper"
+  }
+
+}
 ```
 
